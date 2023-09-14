@@ -1,18 +1,24 @@
 import React, { useState } from "react";
 import Header from "../components/Header";
 import Sidebar from "../components/Sidebar";
+// import { Drawer } from "@mui/material";
+// import SideBarContent from "../components/SideBarContent";
 
-const Main = () => {
-  const [openDrawer, setOpneDrawer] = useState(true);
-  const toggledDrawer = () => {
-    setOpneDrawer((openDrawer) => openDrawer);
-  };
+function Main() {
+  const [drower, setDrower] = useState(true);
+
+  const toggleDrawer = function(){
+      setDrower(prevState=>!prevState);
+  }
+
+
   return (
-    <div>
-      <Header toggledDrawer={toggledDrawer} />
-      <Sidebar openDrawer={openDrawer} />
-    </div>
+    <>
+      <Header toggleDrawer={toggleDrawer} />
+      <Sidebar drower={drower}/>
+    
+    </>
   );
-};
+}
 
 export default Main;

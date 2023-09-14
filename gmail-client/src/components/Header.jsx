@@ -1,6 +1,6 @@
 import React from "react";
 
-import { AppBar, Box, InputBase, TextField, Toolbar, styled } from "@mui/material";
+import { AppBar, Box, InputBase, Toolbar, styled } from "@mui/material";
 import { AccountCircleOutlined, AppsOutlined, HelpOutlineOutlined, Menu as MenuIcon,Search, SettingsOutlined, Tune } from "@mui/icons-material";
 import { gmailLogo } from "../constants/constant";
 const StyledAppBar = styled(AppBar)({
@@ -38,12 +38,13 @@ const OptionWrapper =styled(Box)({
 
 })
 
-const Header = ({toggledDrawer}) => {
-  console.log('toggledDrawer: ', toggledDrawer);
+function Header ({toggleDrawer}) {
+  console.log('toggledDrawer: ', toggleDrawer);
+
   return (
     <StyledAppBar position="static">
       <Toolbar>
-        <MenuIcon color="action" onClick={toggledDrawer}/>
+        <MenuIcon color="action" onClick={toggleDrawer} />
         <img src={gmailLogo} alt="Logo" style={{width:110,marginLeft:'15px'}}/>
         <SeacrhWrapper>
             <Search color="action"/>
