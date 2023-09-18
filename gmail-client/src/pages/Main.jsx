@@ -1,24 +1,27 @@
-import React, { useState } from "react";
+import React, { Suspense, useState } from "react";
 import Header from "../components/Header";
 import Sidebar from "../components/Sidebar";
-import Email from "../components/Email";
-// import { Drawer } from "@mui/material";
-// import SideBarContent from "../components/SideBarContent";
+import { Outlet } from "react-router-dom";
+import SuspenseLoader from "../components/common/SuspenseLoader";
+import { Box } from "@mui/material";
+
 
 function Main() {
   const [drower, setDrower] = useState(true);
 
-  const toggleDrawer = function(){
-      setDrower(prevState=>!prevState);
-  }
-
+  const toggleDrawer = function () {
+    setDrower((prevState) => !prevState);
+  };
 
   return (
     <>
       <Header toggleDrawer={toggleDrawer} />
-      <Sidebar drower={drower}/>
-      <Email drower={drower}/>
-    
+      <Box>
+        <Sidebar drower={drower} />
+        <Suspense fallback={<SuspenseLoader />}>
+          <Outlet context={{drower}} />
+        </Suspense>
+      </Box>
     </>
   );
 }

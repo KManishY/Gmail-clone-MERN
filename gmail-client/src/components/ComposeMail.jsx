@@ -62,9 +62,32 @@ const SendButton = styled(Button)({
 const ComposeMail = ({ openDialog, setOpenDialog }) => {
   const [data, setData] = useState({});
   const sentEmailService = useApi(API_URLS.saveSentEmails);
+  const saveDraftService = useApi(API_URLS.saveDraftEmails)
   const closeComposeMail = (e) => {
     e.preventDefault();
-    setOpenDialog(false);
+    const payload = {
+      to: data.to,
+      from: "my1000088@gmail.com",
+      subject: data.subject,
+      body: data.body,
+      date: new Date(),
+      image: "",
+      name: "manish",
+      starred: false,
+      type: "drafts"
+    };
+
+    console.log('payload: ', payload);
+
+    saveDraftService.call(payload);
+
+    if(!saveDraftService.error) {
+      setOpenDialog(false);
+      setData({});
+    }
+    else{
+      // if email is not sent then we can handle from there
+    }
   };
 
   const config = {
@@ -76,15 +99,15 @@ const ComposeMail = ({ openDialog, setOpenDialog }) => {
 
   const sendMail = async (e) => {
     e.preventDefault();
-    // if (window.Email) {
-    //   window.Email.send({
-    //     ...config,
-    //     To: data.to,
-    //     From: "my1000088@gmail.com",
-    //     Subject: data.subject,
-    //     Body: data.body
-    //   }).then((message) => alert(message));
-    // }
+    if (window.Email) {
+      window.Email.send({
+        ...config,
+        To: data.to,
+        From: "my1000088@gmail.com",
+        Subject: data.subject,
+        Body: data.body
+      }).then((message) => alert(message));
+    }
 
     const payload = {
       to: data.to,

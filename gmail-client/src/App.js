@@ -17,12 +17,12 @@ const router = createBrowserRouter(
     <Route>
       <Route
         path={routes.main.path}
-        element={<Navigate to={`${routes.main.path}/inbox`} />}
+        element={<Navigate to={`${routes.email.path}/inbox`} />}
       />
       <Route path={routes.main.path} element={<routes.main.element />}>
         <Route
-          path={`${routes.main.path}/:type`}
-          element={<routes.main.element />}
+          path={`${routes.email.path}/:type`}
+          element={<routes.email.element />}
           errorElement={<ErrorComponent />}
         />
         <Route
@@ -46,5 +46,7 @@ function App() {
     </Suspense>
   );
 }
+
+
 
 export default App;

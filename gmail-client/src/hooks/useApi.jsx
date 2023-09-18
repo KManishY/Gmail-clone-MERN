@@ -6,12 +6,12 @@ const useApi = (urlObjects) =>  {
   const [response, setResponse] = useState(null);
   const [error, setError] = useState("");
   const [loader, setLoader] = useState(false);
-  const call = async (payload) => {
+  const call = async (payload,type='') => {
     setResponse(null);
     setLoader(true);
     setError('');
     try {
-      let res = await API_GMAIL(urlObjects,payload);
+      let res = await API_GMAIL(urlObjects,payload,type);
       setResponse(res.data);
     } catch (error) {
       console.log("error : ", error.message);
