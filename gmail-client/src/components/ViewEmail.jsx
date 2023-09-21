@@ -4,6 +4,8 @@ import React from "react";
 import PersonIcon from "@mui/icons-material/Person";
 import { useLocation, useOutletContext } from "react-router-dom";
 import styled from "@emotion/styled";
+import useApi from "../hooks/useApi";
+import { API_URLS } from "../services/api.urls";
 
 const IconWrapper = styled(Box)({
   padding: 15,
@@ -51,6 +53,11 @@ const ViewEmail = () => {
   const { drower } = useOutletContext();
   const { state } = useLocation();
   const { email } = state;
+  const moveEmailToBinService = useApi(API_URLS.moveEmailsToBin)
+  const deleteEmail =()=>{
+      moveEmailToBinService.call([email._id]);
+      window.history.back();
+  }
 
   return (
     <Box
@@ -66,7 +73,7 @@ const ViewEmail = () => {
           color="action"
           fontSize="small"
         />
-        <Delete fontSize="small" color="action" style={{ marginLeft: 40 }} />
+        <Delete fontSize="small" color="action" style={{ marginLeft: 40 }} onClick={()=>deleteEmail()} />
       </IconWrapper>
       <SubjectWrapper>
         {email.subject}

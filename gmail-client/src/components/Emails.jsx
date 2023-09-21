@@ -6,6 +6,8 @@ import { API_URLS } from "../services/api.urls";
 import { Box, Checkbox, List } from "@mui/material";
 import { DeleteOutline } from "@mui/icons-material";
 import Email from "./Email";
+import NoMails from "./common/NoMails";
+import { EMPTY_TABS } from "../constants/constant";
 
 const Emails = () => {
   const { drower } = useOutletContext();
@@ -14,6 +16,7 @@ const Emails = () => {
   const { type } = useParams();
   const getEmailService = useApi(API_URLS.getEmailFromType);
   const moveEmailsToBinService = useApi(API_URLS.moveEmailsToBin)
+  const deleteEmailService = useApi(API_URLS.deleteEmails)
 
   useEffect(() => {
     getEmailService.call({}, type);
@@ -23,7 +26,7 @@ const Emails = () => {
   const selectAllEmails = (e) => {
       if (e.target.checked) {
       const email = getEmailService?.response?.map((email) => email._id);
-      console.log("email:selectAllEmails ", email);
+    //   console.log("email:selectAllEmails ", email);
       setSelectedEmails(email);
     } else {
       setSelectedEmails([]);
@@ -31,9 +34,11 @@ const Emails = () => {
   };
   const deleteSelectedEmails = (e) => {
     if(type==='bin'){
-
+        deleteEmailService.call(selectedEmails)
+        console.log('selectedEmails:deleteSelectedEmails ', selectedEmails);
     }
     else{
+        console.log("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb")
         moveEmailsToBinService.call(selectedEmails)
     }
     setRefreshScreen(prev=>!prev)
@@ -63,9 +68,14 @@ const Emails = () => {
             email={email}
             key={email._id}
             selectedEmails={selectedEmails}
+            setRefreshScreen={setRefreshScreen}
+            setSelectedEmails={setSelectedEmails}
           />
         ))}
       </List>
+      {
+        getEmailService?.response?.length===0 && <NoMails message={EMPTY_TABS[type]}/>
+      }
     </Box>
   );
 };
